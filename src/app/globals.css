@@ -3,19 +3,141 @@
 @tailwind utilities;
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --sitePink: #ec008c;
+  --background: #000000;
+  --foreground: #ededed;
+}
+
+/* Hide scrollbar for Chrome, Safari and Opera */
+::-webkit-scrollbar {
+  display: none;
+}
+
+/* Hide scrollbar for IE, Edge and Firefox */
+* {
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
+}
+
+/* Global SVG Styles */
+
+.logo-svg-1 {
+  fill: none;
+  stroke: var(--sitePink);
+  stroke-width: 1.5;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-miterlimit: 10;
+  opacity: 1;
+}
+
+.logo-svg-2 {
+  fill: none;
+  stroke: #009444;
+  stroke-width: 1.5;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-miterlimit: 10;
+  opacity: 1;
+}
+
+.logo-svg-3 {
+  fill: none;
+  stroke: #00aeef;
+  stroke-width: 1.5;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-miterlimit: 10;
+  opacity: 1;
+}
+
+/* Animations */
+
+@keyframes float2 {
+  0% {
+    transform: translate(0.5rem, -0.75rem);
+  } /* 8px, -12px */
+  33% {
+    transform: translate(0.875rem, -1rem);
+  } /* 14px, -16px */
+  66% {
+    transform: translate(0.375rem, -1.25rem);
+  } /* 6px, -20px */
+  100% {
+    transform: translate(0.5rem, -0.75rem);
+  } /* 8px, -12px */
+}
+
+@keyframes float3 {
+  0% {
+    transform: translate(0.75rem, -1rem);
+  } /* 12px, -16px */
+  50% {
+    transform: translate(1rem, -1.25rem);
+  } /* 16px, -20px */
+  100% {
+    transform: translate(0.75rem, -1rem);
+  } /* 12px, -16px */
+}
+
+.logo-float-2 {
+  animation: float2 12s ease-in-out infinite;
+}
+
+.logo-float-3 {
+  animation: float3 10s ease-in-out infinite;
+}
+
+/* Fonts */
+
+@font-face {
+  font-family: "Etude Noire";
+  src: url("/fonts/EtudeNoire-Medium.woff2") format("woff2"),
+    url("/fonts/EtudeNoire-Medium.woff") format("woff");
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Etude Noire";
+  src: url("/fonts/EtudeNoire-Bold.woff2") format("woff2"),
+    url("/fonts/EtudeNoire-Bold.woff") format("woff");
+  font-weight: bold;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Etude Noire";
+  src: url("/fonts/EtudeNoire-Light.woff2") format("woff2"),
+    url("/fonts/EtudeNoire-Light.woff") format("woff");
+  font-weight: 300;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Etude Noire";
+  src: url("/fonts/EtudeNoire.woff2") format("woff2"),
+    url("/fonts/EtudeNoire.woff") format("woff");
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* Not necessary but to remember */
+
+/* .dark {
+  --sitePink: #ec008c;
+  --background: #000000;
+  --foreground: #ededed;
 }
 
 @media (prefers-color-scheme: dark) {
   :root {
-    --background: #0a0a0a;
+    --sitePink: #ec008c;
+    --background: #000000;
     --foreground: #ededed;
   }
-}
-
-body {
-  color: var(--foreground);
-  background: var(--background);
-  font-family: Arial, Helvetica, sans-serif;
-}
+} */
