@@ -3,7 +3,14 @@ import { LogoSvg } from "./LogoSvg";
 
 export function Logo(): JSX.Element {
   return (
-    <div className="w-full max-w-[600px] md:max-w-[800px] lg:max-w-[1000px] relative z-1">
+    <div
+      className="w-full 
+    max-w-[600px] 
+    md:max-w-[800px] 
+    lg:max-w-[1000px] 
+    -translate-x-2
+    relative z-1"
+    >
       <div className="relative w-full aspect-square">
         <div className="absolute inset-0">
           <LogoSvg pathClassName="logo-svg-1" />

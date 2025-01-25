@@ -4,49 +4,39 @@ import { siteConfig } from "@/lib/constants";
 export const generateStructuredData = () => ({
   "@context": "https://schema.org",
   "@type": "MusicGroup",
-  name: "Desert Petunia",
-  description:
-    "Electronic music project preserving the spirit of early 90s computer music",
+  name: siteConfig.name,
+  description: siteConfig.description,
   url: siteConfig.url,
   image: siteConfig.ogImage,
   genre: ["Electronic", "Experimental"],
-  // You can add more structured data here as needed
-  // For example:
-  // "member": [{
-  //   "@type": "Person",
-  //   "name": "Your Name"
-  // }],
-  // "sameAs": [
-  //   "https://spotify.com/...",
-  //   "https://soundcloud.com/..."
-  // ]
+  member: [
+    {
+      "@type": "Person",
+      name: "Ali Somay",
+    },
+  ],
 });
 
 export const baseMetadata: Metadata = {
   metadataBase: new URL(siteConfig.url),
-
-  // Basic metadata
   title: {
     default: siteConfig.name,
     template: `%s | ${siteConfig.name}`,
   },
   description: siteConfig.description,
-  keywords: [
-    "desert petunia",
-    "electronic music",
-    "90s computer music",
-    "experimental music",
-    // Add more relevant keywords
-  ],
+  keywords: ["Desert Petunia", "electronic music", "experimental music"],
 
-  // Author and creator info
   authors: [
     {
-      name: "Your Name",
-      url: "https://your-domain.com",
+      name: "Ali Somay",
+      url: siteConfig.url,
+    },
+    {
+      name: "Başak Ünal",
+      url: "https://basakunal.design",
     },
   ],
-  creator: "Your Name",
+  creator: "Ali Somay",
 
   // Open Graph
   openGraph: {
@@ -72,7 +62,8 @@ export const baseMetadata: Metadata = {
     title: siteConfig.name,
     description: siteConfig.description,
     images: [siteConfig.ogImage],
-    creator: "@yourtwitterhandle",
+    // No twitter (X) account will be created for this project.
+    // creator: "@yourtwitterhandle",
   },
 
   // Robots and indexing
@@ -101,6 +92,7 @@ export const baseMetadata: Metadata = {
     other: [
       { rel: "mask-icon", url: "/safari-pinned-tab.svg", color: "#000000" },
       { rel: "shortcut icon", url: "/favicon.ico" },
+      { rel: "msapplication-TileImage", url: "/mstile-144x144.png" },
     ],
   },
 
@@ -110,10 +102,5 @@ export const baseMetadata: Metadata = {
   // Verification (optional)
   verification: {
     google: process.env.NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION,
-  },
-
-  // Alternate languages (if you add them in the future)
-  alternates: {
-    canonical: siteConfig.url,
   },
 };

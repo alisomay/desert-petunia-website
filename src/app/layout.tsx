@@ -93,6 +93,7 @@ export default function RootLayout({
           inter.variable
         )}
       >
+        {/* All pages get rendered here */}
         {children}
       </body>
     </html>

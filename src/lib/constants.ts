@@ -2,20 +2,16 @@
 import { SiteConfig, MetaData } from "@/types";
 
 export const siteConfig: SiteConfig = {
-  name: process.env.NEXT_PUBLIC_SITE_NAME ?? "Your Site Name",
+  name: process.env.NEXT_PUBLIC_SITE_NAME ?? "Desert Petunia",
   description:
-    process.env.NEXT_PUBLIC_SITE_DESCRIPTION ?? "Your site description",
-  url: process.env.NEXT_PUBLIC_SITE_URL ?? "http://localhost:3000",
+    process.env.NEXT_PUBLIC_SITE_DESCRIPTION ??
+    `
+  Desert Petunia is a project dedicated to keep the spirit of the first interactions I've had with music through computers back in early 90's.
+  Light, playful, curious, setting the mood for emergent natural fun.
+  Dedicated to preserve the "beginner's mind".  
+  The "Petunia" in the name is inspired from young Pete's tattoo`,
+  url: process.env.NEXT_PUBLIC_SITE_URL ?? "https://desertpetunia.com",
   ogImage: `${
-    process.env.NEXT_PUBLIC_SITE_URL ?? "http://localhost:3000"
+    process.env.NEXT_PUBLIC_SITE_URL ?? "https://desertpetunia.com"
   }/og.jpg`,
-  links: {
-    github: process.env.GITHUB_URL ?? "https://github.com/yourusername",
-  },
 } as const;
-
-export const defaultMetadata: MetaData = {
-  title: siteConfig.name,
-  description: siteConfig.description,
-  keywords: ["keyword1", "keyword2", "keyword3"],
-};

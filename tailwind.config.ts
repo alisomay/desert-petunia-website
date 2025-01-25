@@ -13,17 +13,17 @@ export default {
       padding: "2rem",
     },
     screens: {
-      xxxsm: { min: "320px", max: "374px" },
-      xxsm: { min: "375px", max: "389px" },
-      xsm: { min: "390px", max: "639px" },
       sm: "640px",
       md: "768px",
       lg: "1024px",
       xl: "1280px",
       "2xl": "1400px",
-      "max-xxxsm": { max: "320px" },
-      "max-xxsm": { max: "375px" },
-      "max-xsm": { max: "390px" },
+
+      // c: { min: "320px", max: "374px" },
+      // c: { min: "375px", max: "389px" },
+      // c: { min: "390px", max: "579px" },
+      bra: { min: "580px", max: "950px" },
+      brb: "951px",
     },
     extend: {
       fontSize: {
@@ -47,7 +47,7 @@ export default {
       colors: {
         sitePink: "var(--sitePink)",
         background: "var(--background)",
-        foreground: "hsl(var(--foreground))",
+        foreground: "var(--foreground)",
         border: "hsl(var(--border))",
         input: "hsl(var(--input))",
         ring: "hsl(var(--ring))",

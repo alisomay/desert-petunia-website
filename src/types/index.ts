@@ -3,9 +3,6 @@ export type SiteConfig = {
   description: string;
   url: string;
   ogImage: string;
-  links: {
-    github: string;
-  };
 };
 
 export type MetaData = {

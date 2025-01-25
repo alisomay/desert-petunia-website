@@ -15,8 +15,13 @@ export function NavLinks({
   };
 
   return (
-    <div
-      className="flex flex-row justify-center z-10 text-2xl font-normal"
+    <nav
+      aria-label="Main navigation"
+      className="flex flex-row justify-center z-10 
+      text-[1.2rem]
+      bra:text-xl
+      brb:text-2xl
+      font-normal"
       data-menu-item="true"
     >
       {data.map((item, index) =>
@@ -37,6 +42,6 @@ export function NavLinks({
           />
         )
       )}
-    </div>
+    </nav>
   );
 }

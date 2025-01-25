@@ -1,5 +1,8 @@
+// src/components/HomeContent.tsx
 "use client";
-import { ReactNode, useState } from "react";
+
+import React, { useState, useEffect } from "react";
+import { usePathname, useRouter } from "next/navigation";
 
 import { Logo } from "@/components/Logo";
 import { SocialLinks } from "@/components/SocialLinks";
@@ -10,50 +13,108 @@ import { EpkContent } from "@/components/content/Epk";
 import { InteractiveText } from "@/components/InteractiveText";
 import { NavLinks, NavKey } from "@/components/NavLinks";
 
-interface ContentMap extends Record<NavKey, ReactNode> {}
+type ContentMap = Record<NavKey, React.ReactNode>;
 
-export function HomeContent(): JSX.Element {
-  const [isExpanded, setIsExpanded] = useState<boolean>(false);
-  const [expandedContent, setExpandedContent] = useState<ReactNode | null>(
-    null
-  );
+// Convert a pathname like "/about" to the corresponding NavKey ("About")
+function routeToNavKey(pathname: string): NavKey | null {
+  switch (pathname) {
+    case "/about":
+      return "About";
+    case "/booking":
+      return "Booking";
+    case "/epk":
+      return "EPK";
+    default:
+      return null; // home or unknown
+  }
+}
+
+export function HomeContent() {
+  const router = useRouter();
+  const pathname = usePathname();
+
+  const [isExpanded, setIsExpanded] = useState(false);
+  const [expandedContent, setExpandedContent] =
+    useState<React.ReactNode | null>(null);
   const [activeItem, setActiveItem] = useState<NavKey | null>(null);
+  const [scrollPosition, setScrollPosition] = useState(0);
+  const [isInternalNav, setIsInternalNav] = useState(false);
 
+  // So we can have a "logo section" that covers the full viewport on load.
+  const [minHeight, setMinHeight] = useState("100vh");
+
+  // The actual content for each section
   const contentMap: ContentMap = {
     About: <AboutContent />,
     Booking: <BookingContent />,
     EPK: <EpkContent />,
   };
 
-  // Handle collapse triggers
-  const handleCollapse = () => {
-    if (isExpanded) {
+  // On mount, scroll to top and set minHeight
+  useEffect(() => {
+    window.scrollTo(0, 0);
+    setMinHeight(`${window.innerHeight}px`);
+  }, []);
+
+  // Track scroll position (for header fade in/out)
+  useEffect(() => {
+    const handleScroll = () => setScrollPosition(window.scrollY);
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
+
+  useEffect(() => {
+    if (isInternalNav) {
+      return;
+    }
+
+    const matchedKey = routeToNavKey(pathname);
+    if (matchedKey) {
+      setActiveItem(matchedKey);
+      setExpandedContent(contentMap[matchedKey]);
+      setIsExpanded(true);
+    } else {
       setActiveItem(null);
+      setExpandedContent(null);
       setIsExpanded(false);
     }
-  };
+    window.scrollTo(0, 0);
+  }, [pathname, isInternalNav]);
 
-  // Handle menu item clicks
   const handleMenuClick = (item: NavKey): void => {
+    setIsInternalNav(true); // Set flag before URL change
+    console.log(isExpanded);
     if (!isExpanded) {
-      // If collapsed, expand with the clicked item's content
       setActiveItem(item);
       setExpandedContent(contentMap[item]);
       setIsExpanded(true);
     } else if (item === activeItem) {
-      // If expanded and clicking active item, collapse
       setActiveItem(null);
       setIsExpanded(false);
     } else {
-      // If expanded and clicking different item, switch content
       setActiveItem(item);
       setExpandedContent(contentMap[item]);
+    }
+    window.history.pushState({}, "", `/${item.toLowerCase()}`);
+  };
+
+  const handleCollapse = () => {
+    if (isExpanded) {
+      setIsInternalNav(true);
+      setActiveItem(null);
+      setIsExpanded(false);
+      window.history.replaceState({}, "", `/`);
     }
   };
 
   return (
-    <div className="flex flex-col min-h-screen overflow-hidden relative bg-black">
-      {/* Video Background */}
+    <div className="relative min-h-screen bg-black">
+      <header className="sr-only">
+        <h1>Petunia - Official Website</h1>
+      </header>
+
+      {/* Fixed Video Background */}
+
       <video
         autoPlay
         loop
@@ -65,73 +126,90 @@ export function HomeContent(): JSX.Element {
         <source src="/videos/vid-back.mp4" type="video/mp4" />
       </video>
 
-      {/* The content of the page is in the footer the main area only shows the logo. */}
-      {/* TODO: Page height changes currently break the page, fix it, depends on right logo behaviour, footer  */}
-      {/* TODO: On page reloads it should start from the beginning. */}
-      <main className="h-screen flex flex-col items-center justify-center relative">
-        <Logo />
-      </main>
+      {/* Main Content Container */}
+      <div className="relative z-10">
+        {/* Logo Section */}
+        <div
+          className="relative flex items-center justify-center"
+          style={{ minHeight }}
+        >
+          <Logo />
+        </div>
 
-      {/* TODO: We can play with the footer bg opacity. */}
-      {/* TODO: When the page height reduces the opacity of the logo might reduce also, possibilities.. */}
-      <footer className="bg-black text-sitePink pt-0 pb-0 relative z-10 flex flex-col justify-start">
-        {/* Social Media Links Row */}
-        <div className="flex flex-row justify-center z-10 text-base sm:text-2xl pl-6 pr-6 border border-wite">
-          <SocialLinks
-            data={
-              [
-                ["youtube", "https://www.youtube.com"],
-                ["bandcamp", "https://www.instagram.com"],
-                ["spotify", "https://www.bandcamp.com"],
-                ["soundcloud", "https://www.spotify.com"],
-                ["reddit", "https://www.soundcloud.com"],
-                ["instagram", "https://www.facebook.com"],
-                ["threads", "https://www.twitter.com"],
-                ["bluesky", "https://www.spotify.com"],
-              ] as const
-            }
-          />
-        </div>
-        {/* Title */}
-        <div className="flex flex-row justify-center z-10 pt-16 text-5xl">
-          <InteractiveText
-            internal={true}
-            content="Desert Petunia"
-            separator={false}
-            animationRange={4}
-            hoverInDuration={3000}
-            hoverOutDuration={1000}
-            onClick={handleCollapse}
-          />
-        </div>
-        {/* Content */}
-        <ExpandableSection
-          content={expandedContent}
-          isExpanded={isExpanded}
-          onClose={() => setIsExpanded(false)}
-          className="w-full max-w-3xl mx-auto text-center"
-          transitionDuration={800}
-        />
-        {/* Navigation */}
-        <div className="flex flex-row justify-center z-10 pt-4">
-          <NavLinks
-            data={["About", "Booking", "EPK"]}
-            onItemClick={handleMenuClick}
-          />
-        </div>
-        {/* Footer Small Text Info */}
-        <div className="flex flex-row justify-center z-10 pt-12">
-          <div className="flex flex-col justify-center z-10">
-            <p className="text-xs">© 2025 Petunia. All rights reserved.</p>
-            <p className="text-xs text-center pt-2 pb-6">
-              Contact:{" "}
-              <a href="mailto:info@petunia.audio">
-                <span className="font-bold">info@petunia.audio</span>
-              </a>
-            </p>
+        {/* Footer Section */}
+        <footer
+          className={`bg-transparent text-sitePink relative z-10 transform transition-opacity duration-300 ${
+            scrollPosition > 10 ? "opacity-100" : "opacity-0"
+          }`}
+        >
+          {/* Social Media Links Row */}
+          <nav
+            aria-label="Social media links"
+            className="flex justify-center px-4"
+          >
+            <SocialLinks
+              data={[
+                ["youtube", "https://youtube.com/@desertpetunia"],
+                // ["bandcamp", "https://www.bandcamp.com"],
+                // ["spotify", "https://www.spotify.com"],
+                ["soundcloud", "https://soundcloud.com/desertpetunia"],
+                // ["reddit", "https://www.reddit.com"],
+                ["instagram", "https://instagram.com/desert.petunia"],
+                ["threads", "https://threads.net/@desert.petunia"],
+                ["bluesky", "https://bsky.app/profile/desertpetunia.com"],
+              ]}
+            />
+          </nav>
+
+          {/* Title */}
+          <div className="flex justify-center pt-16 text-3xl bra:text-4xl brb:text-5xl">
+            <InteractiveText
+              internal={true}
+              content="Desert Petunia"
+              separator={false}
+              animationRange={4}
+              hoverInDuration={3000}
+              hoverOutDuration={1000}
+              onClick={handleCollapse}
+            />
           </div>
-        </div>
-      </footer>
+
+          {/* Expandable Content Section */}
+          <ExpandableSection
+            content={expandedContent}
+            isExpanded={isExpanded}
+            onClose={() => handleCollapse()}
+            className="w-full max-w-3xl mx-auto text-center"
+            transitionDuration={800}
+            activeSection={activeItem || undefined}
+          />
+
+          {/* Navigation */}
+          <nav
+            aria-label="Main navigation"
+            className="flex flex-row justify-center z-10 pt-4"
+          >
+            <NavLinks
+              data={["About", "Booking", "EPK"]}
+              onItemClick={handleMenuClick}
+            />
+          </nav>
+
+          {/* Footer Info */}
+          <div className="flex justify-center pt-12">
+            <div className="flex flex-col justify-center">
+              <p className="text-sm brb:text-[0.95rem] text-center">
+                <a href="mailto:info@desertpetunia.com">
+                  <span className="font-normal">info@desertpetunia.com</span>
+                </a>
+              </p>
+              <p className="text-[0.5rem] pt-2 pb-6 text-center">
+                © 2025 Petunia. All rights reserved.
+              </p>
+            </div>
+          </div>
+        </footer>
+      </div>
     </div>
   );
 }
