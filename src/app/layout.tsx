@@ -1,6 +1,5 @@
 import { Inter } from "next/font/google";
 import { cn } from "@/lib/utils";
-import { siteConfig } from "@/lib/constants";
 import { Metadata } from "next";
 import { Analytics } from "@vercel/analytics/next";
 
