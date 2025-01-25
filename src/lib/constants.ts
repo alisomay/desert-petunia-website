@@ -1,5 +1,5 @@
 // src/lib/constants.ts
-import { SiteConfig, MetaData } from "@/types";
+import { SiteConfig } from "@/types";
 
 export const siteConfig: SiteConfig = {
   name: process.env.NEXT_PUBLIC_SITE_NAME ?? "Desert Petunia",

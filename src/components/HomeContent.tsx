@@ -1,8 +1,8 @@
 // src/components/HomeContent.tsx
 "use client";
 
-import React, { useState, useEffect } from "react";
-import { usePathname, useRouter } from "next/navigation";
+import React, { useState, useEffect, useMemo } from "react";
+import { usePathname } from "next/navigation";
 
 import { Logo } from "@/components/Logo";
 import { SocialLinks } from "@/components/SocialLinks";
@@ -30,7 +30,6 @@ function routeToNavKey(pathname: string): NavKey | null {
 }
 
 export function HomeContent() {
-  const router = useRouter();
   const pathname = usePathname();
 
   const [isExpanded, setIsExpanded] = useState(false);
@@ -44,11 +43,14 @@ export function HomeContent() {
   const [minHeight, setMinHeight] = useState("100vh");
 
   // The actual content for each section
-  const contentMap: ContentMap = {
-    About: <AboutContent />,
-    Booking: <BookingContent />,
-    EPK: <EpkContent />,
-  };
+  const contentMap = useMemo<ContentMap>(
+    () => ({
+      About: <AboutContent />,
+      Booking: <BookingContent />,
+      EPK: <EpkContent />,
+    }),
+    []
+  );
 
   // On mount, scroll to top and set minHeight
   useEffect(() => {
@@ -79,7 +81,7 @@ export function HomeContent() {
       setIsExpanded(false);
     }
     window.scrollTo(0, 0);
-  }, [pathname, isInternalNav]);
+  }, [pathname, isInternalNav, contentMap]);
 
   const handleMenuClick = (item: NavKey): void => {
     setIsInternalNav(true); // Set flag before URL change
@@ -110,7 +112,7 @@ export function HomeContent() {
   return (
     <div className="relative min-h-screen bg-black">
       <header className="sr-only">
-        <h1>Petunia - Official Website</h1>
+        <h1>Desert Petunia - Official Website</h1>
       </header>
 
       {/* Fixed Video Background */}

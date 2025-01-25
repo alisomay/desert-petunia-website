@@ -1,4 +1,10 @@
-import React, { useState, useEffect, useRef, ReactNode } from "react";
+import React, {
+  useState,
+  useEffect,
+  useRef,
+  ReactNode,
+  useCallback,
+} from "react";
 
 interface ExpandableSectionProps {
   /**
@@ -52,12 +58,12 @@ export const ExpandableSection: React.FC<ExpandableSectionProps> = ({
   /**
    * Calculates the appropriate height to either expand or collapse the section.
    */
-  const updateHeight = () => {
+  const updateHeight = useCallback(() => {
     if (contentRef.current) {
       const newHeight = isExpanded ? contentRef.current.scrollHeight : 0;
       setHeight(newHeight);
     }
-  };
+  }, [isExpanded]);
 
   /**
    * Handle content changes and expansion state.
@@ -81,14 +87,14 @@ export const ExpandableSection: React.FC<ExpandableSectionProps> = ({
 
       return () => clearTimeout(timer);
     }
-  }, [content, isExpanded, isTransitioning, transitionDuration]);
+  }, [content, isExpanded, isTransitioning, transitionDuration, updateHeight]);
 
   /**
    * Whenever isExpanded changes, recalculate the height.
    */
   useEffect(() => {
     updateHeight();
-  }, [isExpanded]);
+  }, [isExpanded, updateHeight]);
 
   /**
    * Watch for size changes inside the content (e.g., images loading)
@@ -108,7 +114,7 @@ export const ExpandableSection: React.FC<ExpandableSectionProps> = ({
     return () => {
       resizeObserver.disconnect();
     };
-  }, [isExpanded]);
+  }, [isExpanded, updateHeight]);
 
   /**
    * Mark when a transition starts/ends so we know when it's safe to reset content.

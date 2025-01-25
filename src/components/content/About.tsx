@@ -14,17 +14,19 @@ export function AboutContent() {
       <h2 className="sr-only">About Desert Petunia</h2>
       <p className=" leading-relaxed">
         Desert Petunia is a project dedicated to keep the spirit of the first
-        interactions I've had with music through computers back in early 90's.
+        interactions I&apos;ve had with music through computers back in early
+        90&apos;s.
         <br />
         <br />
         Light, playful, curious, setting the mood for emergent natural fun.
         <br />
         <br />
-        Dedicated to preserve the "beginner's mind".
+        Dedicated to preserve the &quot;beginner&apos;s mind&quot;.
         <br />
         <br />
-        The "Petunia" in the name is inspired from young Pete's tattoo. For
-        updates and latest releases please follow the social media links.
+        The &quot;Petunia&quot; in the name is inspired from young Pete&apos;s
+        tattoo. For updates and latest releases please follow the social media
+        links.
         <br />
         <br />
         All visual entities related to this project is created in collaboration
