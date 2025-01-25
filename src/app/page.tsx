@@ -1,9 +1,10 @@
 import { Metadata } from "next";
 import { HomeContent } from "@/components/HomeContent";
+import { siteConfig } from "@/lib/constants";
 
 export const metadata: Metadata = {
-  title: "Home",
-  description: "Desert Petunia Landing Page",
+  title: siteConfig.name,
+  description: siteConfig.description,
   keywords: ["electronic", "music", "experimental"],
 };
 

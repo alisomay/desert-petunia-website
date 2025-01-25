@@ -2,7 +2,7 @@ import { HomeContent } from "@/components/HomeContent";
 import { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "About",
+  title: "Desert Petunia",
   description: "About Desert Petunia",
   keywords: ["electronic", "music", "experimental", "contact"],
 };

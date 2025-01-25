@@ -2,8 +2,8 @@ import { HomeContent } from "@/components/HomeContent";
 import { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Epk",
-  description: "Desert Petunia Electronic Press Kit",
+  title: "Desert Petunia",
+  description: "Electronic Press Kit",
   keywords: ["electronic", "music", "experimental"],
 };
 
