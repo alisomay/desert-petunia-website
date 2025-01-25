@@ -31,10 +31,6 @@ export const baseMetadata: Metadata = {
       name: "Ali Somay",
       url: siteConfig.url,
     },
-    {
-      name: "Başak Ünal",
-      url: "https://basakunal.design",
-    },
   ],
   creator: "Ali Somay",
 
