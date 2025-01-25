@@ -85,19 +85,20 @@ export function HomeContent() {
 
   const handleMenuClick = (item: NavKey): void => {
     setIsInternalNav(true); // Set flag before URL change
-    console.log(isExpanded);
     if (!isExpanded) {
       setActiveItem(item);
       setExpandedContent(contentMap[item]);
       setIsExpanded(true);
+      window.history.pushState({}, "", `/${item.toLowerCase()}`);
     } else if (item === activeItem) {
       setActiveItem(null);
       setIsExpanded(false);
+      window.history.replaceState({}, "", `/`);
     } else {
       setActiveItem(item);
       setExpandedContent(contentMap[item]);
+      window.history.pushState({}, "", `/${item.toLowerCase()}`);
     }
-    window.history.pushState({}, "", `/${item.toLowerCase()}`);
   };
 
   const handleCollapse = () => {
