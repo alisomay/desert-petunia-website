@@ -3,8 +3,8 @@ import { HomeContent } from "@/components/HomeContent";
 
 export const metadata: Metadata = {
   title: "Home",
-  description: "Description here",
-  keywords: ["some", "key", "words"],
+  description: "Desert Petunia Landing Page",
+  keywords: ["electronic", "music", "experimental"],
 };
 
 export default function Home() {
