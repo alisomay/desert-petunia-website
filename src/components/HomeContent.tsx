@@ -153,7 +153,7 @@ export function HomeContent() {
             <SocialLinks
               data={[
                 ["youtube", "https://youtube.com/@desertpetunia"],
-                // ["bandcamp", "https://www.bandcamp.com"],
+                ["bandcamp", "https://desertpetunia.bandcamp.com/"],
                 // ["spotify", "https://www.spotify.com"],
                 ["soundcloud", "https://soundcloud.com/desertpetunia"],
                 // ["reddit", "https://www.reddit.com"],
