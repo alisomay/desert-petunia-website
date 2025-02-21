@@ -154,8 +154,11 @@ export function HomeContent() {
               data={[
                 ["youtube", "https://youtube.com/@desertpetunia"],
                 ["bandcamp", "https://desertpetunia.bandcamp.com/"],
-                // ["spotify", "https://www.spotify.com"],
                 ["soundcloud", "https://soundcloud.com/desertpetunia"],
+                [
+                  "spotify",
+                  "https://open.spotify.com/artist/0LoEoOAng7hhfwVwa8lO4x?si=395d57bb41b149f6",
+                ],
                 // ["reddit", "https://www.reddit.com"],
                 ["instagram", "https://instagram.com/desert.petunia"],
                 ["threads", "https://threads.net/@desert.petunia"],
